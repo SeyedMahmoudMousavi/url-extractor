@@ -214,7 +214,7 @@ class URL
                         }
                     } else {
                         foreach ($extensions as $extension) {
-                            if (trim($extension, '.') === pathinfo(urldecode($value), PATHINFO_EXTENSION)) {
+                            if (strtolower(trim($extension, '.')) === strtolower(pathinfo(urldecode($value), PATHINFO_EXTENSION))) {
                                 $links[] = urldecode($value);
                             }
                         }
@@ -227,7 +227,7 @@ class URL
                     }
                 } else {
                     foreach ($extensions as $extension) {
-                        if (trim($extension, '.') === pathinfo(urldecode($url), PATHINFO_EXTENSION)) {
+                        if (strtolower(trim($extension, '.')) === strtolower(pathinfo(urldecode($url), PATHINFO_EXTENSION))) {
                             $links[] = urldecode($url);
                         }
                     }
