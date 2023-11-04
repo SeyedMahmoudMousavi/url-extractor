@@ -1,6 +1,8 @@
 # UrlExtractor
 Extract urls from your a file or web address
 
+## install
+        composer require codecrafted/url-extractor
 ## use
 
         use  Codecrafted\UrlExtractor\URL;
