@@ -2,6 +2,9 @@
 
 namespace Codecrafted\UrlExtractor;
 
+require_once './vendor/codecrafted/iron-elephant/src/heart.php';
+
+
 /**
  * wrok with url
  */
@@ -33,6 +36,7 @@ class URL
             }
         }
 
+        sort($links);
         $this->urls = $links;
 
         return $this;
@@ -55,27 +59,40 @@ class URL
 
         do {
 
-            $position_https = strpos($html, 'https://', $start);
-            $position_http = strpos($html, 'http://', $start);
+            $position_collection = $this->serachNext($html, $start);
 
-            if ($position_https === false) {
-                if ($position_http !== false) {
-                    $start_position = $position_http;
-                } else {
-                    continue;
-                }
-            } elseif ($position_http === false) {
-                $start_position = $position_https;
-            } else {
-                if ($position_https <= $position_http) {
-                    $start_position = $position_https;
-                } else {
-                    $start_position = $position_http;
-                }
+            $filtered_positions = array_filter($position_collection, function ($value) {
+                return $value !== false;
+            });
+
+            if (empty($filtered_positions)) {
+                break;
             }
 
-            $end_position = strpos($html, '"', $start_position);
-            $link = substr($html, $start_position, ($end_position - $start_position)) . "\r\n";
+            $start_position = min(array_values($filtered_positions));
+
+            $finding_method = array_search($start_position, $filtered_positions);
+
+            if ($finding_method === 'https://' || $finding_method === 'http://') {
+                $char = null;
+                $i = 1;
+                do {
+                    $char = $html[$start_position - $i];
+                    $i++;
+                } while ($char !== "'" && $char !== '"');
+                $end_position = strpos($html, $char, $start_position);
+                $link = substr($html, $start_position, ($end_position - $start_position));
+            } else {
+                $char = null;
+                $i = 0;
+                do {
+                    $char = $html[$start_position + strlen($finding_method) + $i];
+                    $i++;
+                } while ($char !== "'" && $char !== '"');
+                $start_position += strlen($finding_method) + $i;
+                $end_position = strpos($html, $char, $start_position);
+                $link = substr($html, $start_position, ($end_position - $start_position));
+            }
             $link = str_replace("\r", "", $link);
             $link = str_replace("\n", "", $link);
             $link = trim($link);
@@ -83,9 +100,27 @@ class URL
             $urls[] = $link;
             $start = $end_position;
             $urls = array_unique($urls);
-        } while ((strpos($html, 'http://', $start) !== false || strpos($html, 'https://', $start) !== false) && count($urls) !== $limit);
+        } while (count($urls) !== $limit);
 
+        asort($urls);
         return $urls;
+    }
+
+    /**
+     * search next position and return as a array
+     *
+     * @param $html
+     * @param $start
+     * @return array
+     */
+    private function serachNext($html, $start): array
+    {
+        $position_collection['https://']  = strpos($html, 'https://', $start);
+        $position_collection['http://']  = strpos($html, 'http://', $start);
+        $position_collection['href=']  = strpos($html, 'href=', $start);
+        $position_collection['src=']  = strpos($html, 'src=', $start);
+
+        return $position_collection;
     }
 
     /**
@@ -163,5 +198,44 @@ class URL
             }
         }
         echo '</pre>';
+    }
+
+    public function fileOnly(array $extensions = ['*'])
+    {
+        $links = [];
+
+        foreach ($this->urls as $url) {
+
+            if (is_array($url)) {
+                foreach ($url as $value) {
+                    if ($extensions === ['*']) {
+                        if (false != pathinfo(urldecode($value), PATHINFO_EXTENSION)) {
+                            $links[] = urldecode($value);
+                        }
+                    } else {
+                        foreach ($extensions as $extension) {
+                            if (trim($extension, '.') === pathinfo(urldecode($value), PATHINFO_EXTENSION)) {
+                                $links[] = urldecode($value);
+                            }
+                        }
+                    }
+                }
+            } else {
+                if ($extensions === ['*']) {
+                    if (false != pathinfo(urldecode($url), PATHINFO_EXTENSION)) {
+                        $links[] = urldecode($url);
+                    }
+                } else {
+                    foreach ($extensions as $extension) {
+                        if (trim($extension, '.') === pathinfo(urldecode($url), PATHINFO_EXTENSION)) {
+                            $links[] = urldecode($url);
+                        }
+                    }
+                }
+            }
+        }
+
+        $this->urls = $links;
+        return $this;
     }
 }

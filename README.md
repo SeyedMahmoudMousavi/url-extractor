@@ -42,6 +42,10 @@ or :
         all_url_limtt = 50;             // how many link you want to export
         $links->limit(50);              // how many link you want to export
 
+        //$links->fileOnly();           // export only files
+        $fileTypes = ['.jpg','mp3'];    // your favorite file types
+        $links->fileOnly($fileTypes);
+
         $links->showAsHTML();                   // show in web page
         $string_urls = $links->showURL();       // return as string
         $array_urls = $links->getURL();         // return as array     
