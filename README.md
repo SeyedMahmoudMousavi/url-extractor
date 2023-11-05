@@ -21,7 +21,7 @@ Extract urls from your a file or web address
                 "https://www.youtube.com",
                 "https://github.com/SeyedMahmoudMousavi"
         ];
-        $links->extractURL($url,$limit);
+        $links->extractURL($urls,$limit);
 
         $all_url_limtt = 50;                    // how many link you want to export
         $links->limit($all_url_limtt);          
