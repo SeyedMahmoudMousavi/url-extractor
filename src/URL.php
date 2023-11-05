@@ -172,6 +172,7 @@ class URL
             }
         }
 
+        $links = trim($links, "\n");
         return $links;
     }
 
@@ -250,17 +251,17 @@ class URL
                     rsort($url);
                 }
             }
-            rsort($url);
+            rsort($urls);
         } else {
             foreach ($urls as $url) {
                 if (is_array($url)) {
                     sort($url);
                 }
             }
-            sort($url);
+            sort($urls);
         }
 
-        $this->urls = $url;
+        $this->urls = $urls;
         return $this;
     }
 }
