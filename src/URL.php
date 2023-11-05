@@ -35,8 +35,6 @@ class URL
                 $links[] = $this->findURL($address, $limit);
             }
         }
-
-        sort($links);
         $this->urls = $links;
 
         return $this;
@@ -101,8 +99,6 @@ class URL
             $start = $end_position;
             $urls = array_unique($urls);
         } while (count($urls) !== $limit);
-
-        asort($urls);
         return $urls;
     }
 
@@ -236,6 +232,35 @@ class URL
         }
 
         $this->urls = $links;
+        return $this;
+    }
+
+    /**
+     * sort urls
+     *
+     * @return object
+     */
+    public function sortURL(bool $desc = false): object
+    {
+
+        $urls = $this->urls;
+        if ($desc) {
+            foreach ($urls as $url) {
+                if (is_array($url)) {
+                    rsort($url);
+                }
+            }
+            rsort($url);
+        } else {
+            foreach ($urls as $url) {
+                if (is_array($url)) {
+                    sort($url);
+                }
+            }
+            sort($url);
+        }
+
+        $this->urls = $url;
         return $this;
     }
 }

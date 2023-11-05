@@ -39,12 +39,14 @@ or :
         $urls = ["https://www.youtube.com","https://github.com/SeyedMahmoudMousavi"];
         $links->extractURL($url,$limit);
 
-        all_url_limtt = 50;             // how many link you want to export
-        $links->limit(50);              // how many link you want to export
+        all_url_limtt = 50;                     // how many link you want to export
+        $links->limit(50);                      // how many link you want to export
 
-        //$links->fileOnly();           // export only files
-        $fileTypes = ['.jpg','mp3'];    // your favorite file types
+        //$links->fileOnly();                   // export only files
+        $fileTypes = ['.jpg','mp3'];            // your favorite file types
         $links->fileOnly($fileTypes);
+        //$links->sortURL();                    // sort links asc
+        $links->sortURL(true);                  // sort links desc
 
         $links->showAsHTML();                   // show in web page
         $string_urls = $links->showURL();       // return as string
