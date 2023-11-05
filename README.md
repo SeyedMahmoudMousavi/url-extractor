@@ -24,7 +24,7 @@ Extract urls from your a file or web address
         $links->extractURL($url,$limit);
 
         $all_url_limtt = 50;                    // how many link you want to export
-        $links->limit($all_url_limtt);          // how many link you want to export
+        $links->limit($all_url_limtt);          
 
         //$links->fileOnly();                   // export only files
 
