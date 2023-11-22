@@ -162,10 +162,10 @@ class URL
 
             if (is_array($url)) {
                 foreach ($url as $value) {
-                    $links .= urldecode($value) . "\n";
+                    $links .= $value . "\n";
                 }
             } else {
-                $links .=  urldecode($url) . "\n";
+                $links .=  $url . "\n";
             }
         }
 
@@ -185,10 +185,10 @@ class URL
 
             if (is_array($url)) {
                 foreach ($url as $value) {
-                    echo urldecode($value) . "\n";
+                    echo $value . "\n";
                 }
             } else {
-                echo urldecode($url) . "\n";
+                echo $url . "\n";
             }
         }
         echo '</pre>';
@@ -203,26 +203,26 @@ class URL
             if (is_array($url)) {
                 foreach ($url as $value) {
                     if ($extensions === ['*']) {
-                        if (false != pathinfo(urldecode($value), PATHINFO_EXTENSION)) {
-                            $links[] = urldecode($value);
+                        if (false != pathinfo($value, PATHINFO_EXTENSION)) {
+                            $links[] = $value;
                         }
                     } else {
                         foreach ($extensions as $extension) {
-                            if (strtolower(trim($extension, '.')) === strtolower(pathinfo(urldecode($value), PATHINFO_EXTENSION))) {
-                                $links[] = urldecode($value);
+                            if (strtolower(trim($extension, '.')) === strtolower(pathinfo($value, PATHINFO_EXTENSION))) {
+                                $links[] = $value;
                             }
                         }
                     }
                 }
             } else {
                 if ($extensions === ['*']) {
-                    if (false != pathinfo(urldecode($url), PATHINFO_EXTENSION)) {
-                        $links[] = urldecode($url);
+                    if (false != pathinfo($url, PATHINFO_EXTENSION)) {
+                        $links[] = $url;
                     }
                 } else {
                     foreach ($extensions as $extension) {
-                        if (strtolower(trim($extension, '.')) === strtolower(pathinfo(urldecode($url), PATHINFO_EXTENSION))) {
-                            $links[] = urldecode($url);
+                        if (strtolower(trim($extension, '.')) === strtolower(pathinfo($url, PATHINFO_EXTENSION))) {
+                            $links[] = $url;
                         }
                     }
                 }
