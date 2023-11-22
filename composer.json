@@ -1,21 +1,21 @@
 {
-    "name": "codecrafted/url-extractor",
-    "description": "extract URLs from a file, string or webpage",
-    "type": "library",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Codecrafted\\UrlExtractor\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Seyed Mahmoud Mousavi",
-            "email": "smousavi503@gmail.com"
-        }
-    ],
-    "minimum-stability": "stable",
-    "require": {
-        "codecrafted/iron-elephant":"^2.0"
+  "name": "codecrafted/url-extractor",
+  "description": "extract URLs from a file, string or webpage",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Codecrafted\\UrlExtractor\\": "src/"
     }
+  },
+  "authors": [
+    {
+      "name": "Seyed Mahmoud Mousavi",
+      "email": "smousavi503@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "codecrafted/iron-elephant": "^2.1"
+  }
 }

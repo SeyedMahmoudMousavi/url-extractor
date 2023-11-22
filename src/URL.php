@@ -2,8 +2,7 @@
 
 namespace Codecrafted\UrlExtractor;
 
-require_once './vendor/codecrafted/iron-elephant/src/heart.php';
-
+require_once __DIR__ . '/../vendor/autoload.php';
 
 /**
  * wrok with url
